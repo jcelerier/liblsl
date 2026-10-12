@@ -83,6 +83,11 @@ if(WIN32)
     endif(BUILD_SHARED_LIBS)
 endif(WIN32)
 
+# A static liblsl does not export its C API from whatever links it.
+if(LSL_BUILD_STATIC)
+    target_compile_definitions(lslobj PRIVATE LIBLSL_STATIC)
+endif()
+
 # Link in 3rd party dependencies
 # - loguru and asio header-only
 target_include_directories(lslobj
