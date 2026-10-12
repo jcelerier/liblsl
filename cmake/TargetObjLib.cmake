@@ -88,6 +88,13 @@ if(LSL_BUILD_STATIC)
     target_compile_definitions(lslobj PRIVATE LIBLSL_STATIC)
 endif()
 
+# Standalone Asio's extern "C" names equal Boost.Asio's (without its version namespace); keep ours apart.
+target_compile_definitions(lslobj
+    PUBLIC
+        asio_detail_posix_thread_function=liblsl_asio_detail_posix_thread_function
+        asio_signal_handler=liblsl_asio_signal_handler
+)
+
 # Link in 3rd party dependencies
 # - loguru and asio header-only
 target_include_directories(lslobj
