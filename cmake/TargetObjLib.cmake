@@ -20,6 +20,8 @@ target_sources(lslobj
 target_link_libraries(lslobj PRIVATE lslboost Threads::Threads)
 if(MINGW)
     target_link_libraries(lslobj PRIVATE bcrypt)
+    # Clang targeting MinGW defines none of the macros Asio probes for threads, so it would fall back to null_thread.
+    target_compile_definitions(lslobj PUBLIC ASIO_HAS_THREADS=1)
 endif()
 if(UNIX AND NOT APPLE)
     # check that clock_gettime is present in the stdlib, link against librt otherwise
