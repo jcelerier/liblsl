@@ -95,6 +95,9 @@ target_compile_definitions(lslobj
         asio_signal_handler=liblsl_asio_signal_handler
 )
 
+# Bundled Asio, pugixml and loguru live in their own namespaces, so no other copy in the program can resolve against ours.
+target_compile_definitions(lslobj PUBLIC asio=lsl_asio loguru=lsl_loguru $<$<BOOL:${LSL_BUNDLED_PUGIXML}>:pugi=lsl_pugi>)
+
 # Link in 3rd party dependencies
 # - loguru and asio header-only
 target_include_directories(lslobj
